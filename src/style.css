@@ -1,0 +1,10 @@
+@import url("./reset.css");
+
+body {
+    font-family: sans-serif;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
