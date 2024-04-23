@@ -1,8 +1,12 @@
 
 #sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     height: 100vh;
     background: linear-gradient(to top, #8992AF 45%, #33557E);
     padding: 25px;
+    color: white;
 }
 
 .dateLocationDiv {
@@ -14,18 +18,39 @@
 }
 
 .sidebarLocation {
-    color: white;
     font-size: 40px;
 }
 
 .sidebarTime {
     justify-self: center;
     font-size: 24px;
-    color: rgb(161, 161, 161);
 }
 
 .sidebarDate {
     grid-column: 1/3;
+    font-size: 20px;
+}
+
+.sidebarWeather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.sidebarWeatherFig img {
+    width: 100px;
+    height: auto;
+}
+
+.sidebarWeather figcaption {
+    font-size: 20px;
+}
+
+.sidebarTemp {
+    font-size: 60px;
+}
+
+.sidebarPerceived {
     font-size: 24px;
-    color: rgb(161, 161, 161);
 }
