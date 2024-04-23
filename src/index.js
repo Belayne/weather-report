@@ -13,13 +13,19 @@ async function controller() {
     const searchbar = makeSearchbarView();
 
     async function search(e) {
-        const searchedLocation = e.target.value;
-        console.log(searchedLocation)
-        weather = await getWeather(searchedLocation);
-        sidebar.update(weather)
+        e.preventDefault();
+        try {
+            const searchedLocation = new FormData(e.target).get("search")
+            weather = await getWeather(searchedLocation);
+            sidebar.update(weather)
+        }
+        catch {
+            e.target.querySelector("input").value = "Inavlid Search";
+        }
+        
     }
 
-    searchbar.addEventListener('search', e => search(e))
+    searchbar.addEventListener('submit', e => search(e))
 
     document.querySelector("#container").append(sidebar.view)
     document.querySelector("#container").append(searchbar)

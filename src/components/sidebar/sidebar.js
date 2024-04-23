@@ -16,7 +16,7 @@ function createDateLocationView(location, lastUpdate) {
         formattedData.time = getTime(lastUpdate);
 
         view.innerHTML = /*html*/ `
-        <h1 class="sidebarLocation">${formattedData.location}</h1>
+        <h1 class="sidebarLocation">${formattedData.location.city}<span> ${formattedData.location.country}</span></h1>
         <p class="sidebarTime">${formattedData.time}</p>
         <p class="sidebarDate">${formattedData.date}</p>
     `

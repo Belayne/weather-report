@@ -11,14 +11,22 @@
 
 .dateLocationDiv {
     display: grid;
-    gap: 10px;
+    row-gap: 15px;
     grid-template-columns: 1fr 1fr;
     justify-items: flex-start;
     align-items: flex-end;
 }
 
 .sidebarLocation {
-    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 24px;
+}
+
+.sidebarLocation span {
+    color: rgb(161, 161, 161);
+    font-size: 16px;
 }
 
 .sidebarTime {
