@@ -6,42 +6,57 @@ function getTime(date) {
 }
 
 function createDateLocationView(location, lastUpdate) {
-    let time = getTime(lastUpdate)
-    const date = format(new Date, 'eeee d MMMM');
+    const formattedData = {};
     const view = document.createElement('div');
-
     view.classList.add('dateLocationDiv')
-    view.innerHTML = /*html*/ `
-        <h1 class="sidebarLocation">${location}</h1>
-        <p class="sidebarTime">${time}</p>
-        <p class="sidebarDate">${date}</p>
-    `
 
-    return view;
+    function init(location, lastUpdate) {
+        formattedData.location = location;
+        formattedData.date = format(new Date, 'eeee d MMMM');
+        formattedData.time = getTime(lastUpdate);
+
+        view.innerHTML = /*html*/ `
+        <h1 class="sidebarLocation">${formattedData.location}</h1>
+        <p class="sidebarTime">${formattedData.time}</p>
+        <p class="sidebarDate">${formattedData.date}</p>
+    `
+    }
+
+    init(location, lastUpdate);
+
+    return {
+        view,
+        init
+    }
 }
 
 function createWeatherView(weatherData, american = false) {
     const view = document.createElement('div');
-    let weatherText = weatherData.condition.text;
-    let weatherIcon = weatherData.condition.icon;
-    let temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
-    let feelTemp = (american)? weatherData.feelslike_f + "°F": weatherData.feelslike_c + "°C";
-    
     view.classList.add('sidebarWeather');
-    view.innerHTML = /*html*/ `
-        <figure class="sidebarWeatherFig">
-            <img src="${weatherIcon}"/>
-            <figcaption>${weatherText}</figcaption>
-        </figure>
-        <p class="sidebarTemp">${temp}</p>
-        <p class="sidebarPerceived">Perceived ${feelTemp}</p>
-    `
+    const formattedData = {};
 
-    function update(newData) {
-        
+    function init(weatherData) {
+        formattedData.weatherText = weatherData.condition.text;
+        formattedData.weatherIcon = `${weatherData.condition.icon}`;
+        formattedData.temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
+        formattedData.feelTemp = (american)? "Perceived " + weatherData.feelslike_f + "°F": "Perceived " + weatherData.feelslike_c + "°C";
+
+        view.innerHTML = /*html*/ `
+        <figure class="sidebarWeatherFig">
+            <img src="${formattedData.weatherIcon}"/>
+            <figcaption>${formattedData.weatherText}</figcaption>
+        </figure>
+        <p class="sidebarTemp">${formattedData.temp}</p>
+        <p class="sidebarPerceived">${formattedData.feelTemp}</p>
+    `
     }
 
-    return view;
+    init(weatherData);
+
+    return {
+        view,
+        init
+    }
 }
 
 
@@ -52,10 +67,18 @@ export default function makeSidebar(weatherData) {
     const sidebarDateLocation = createDateLocationView(weatherData.location, weatherData.now.last_updated);
     const sidebarWeather = createWeatherView(weatherData.now);
 
-    view.append(sidebarDateLocation);
-    view.append(sidebarWeather);
+    view.append(sidebarDateLocation.view);
+    view.append(sidebarWeather.view);
 
-    return view;
+    function update(newData) {
+        sidebarWeather.init(newData.now);
+        sidebarDateLocation.init(newData.location, newData.now.last_updated)
+    }
+
+    return {
+        view,
+        update
+    }
 }
 
 

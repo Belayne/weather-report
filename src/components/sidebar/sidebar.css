@@ -4,7 +4,7 @@
     flex-direction: column;
     gap: 20px;
     height: 100vh;
-    background: linear-gradient(to top, #8992AF 45%, #33557E);
+    background: linear-gradient(120deg,#33557E 0%, #425679 50%, #7D87AB 100%);
     padding: 25px;
     color: white;
 }
