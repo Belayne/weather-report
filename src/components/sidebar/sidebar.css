@@ -14,17 +14,14 @@
     row-gap: 15px;
     grid-template-columns: 1fr 1fr;
     justify-items: flex-start;
-    align-items: flex-end;
 }
 
 .sidebarLocation {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
     font-size: 24px;
 }
 
-.sidebarLocation span {
+.sidebarLocation span, .sidebarTime span {
+    display: block;
     color: rgb(161, 161, 161);
     font-size: 16px;
 }
@@ -52,6 +49,7 @@
 }
 
 .sidebarWeather figcaption {
+    text-align: center;
     font-size: 20px;
 }
 

@@ -17,7 +17,7 @@ function createDateLocationView(location, lastUpdate) {
 
         view.innerHTML = /*html*/ `
         <h1 class="sidebarLocation">${formattedData.location.city}<span> ${formattedData.location.country}</span></h1>
-        <p class="sidebarTime">${formattedData.time}</p>
+        <p class="sidebarTime">${formattedData.time}<span>Last update</span></p>
         <p class="sidebarDate">${formattedData.date}</p>
     `
     }
@@ -30,7 +30,7 @@ function createDateLocationView(location, lastUpdate) {
     }
 }
 
-function createWeatherView(weatherData, american = false) {
+function createWeatherView(weatherData, american) {
     const view = document.createElement('div');
     view.classList.add('sidebarWeather');
     const formattedData = {};
@@ -60,12 +60,12 @@ function createWeatherView(weatherData, american = false) {
 }
 
 
-export default function makeSidebar(weatherData) {
+export default function makeSidebar(weatherData, american) {
     const view = document.createElement('div');
     view.id = "sidebarContainer";
 
     const sidebarDateLocation = createDateLocationView(weatherData.location, weatherData.now.last_updated);
-    const sidebarWeather = createWeatherView(weatherData.now);
+    const sidebarWeather = createWeatherView(weatherData.now, american);
 
     view.append(sidebarDateLocation.view);
     view.append(sidebarWeather.view);

@@ -1,0 +1,14 @@
+#searchbarDiv {
+    display: flex;
+    gap: 5px;
+}
+
+#locationSearch {
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+#locationSearch:invalid {
+    border: 2px solid red;
+}
