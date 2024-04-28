@@ -2,6 +2,7 @@ import { getWeather } from "./weatherData"
 import makeSidebar from "./components/sidebar/sidebar";
 import makeSearchbarView from "./components/searchBar/searchBar";
 import makeHourlyForecast from "./components/hourlyForecast/forecast";
+import "./style.css"
 
 async function log() {
     const weather = await getWeather("Rome");
