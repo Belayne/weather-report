@@ -15,7 +15,7 @@ class Weather {
 
 async function getWeather(city = "Rome") {
     try {
-        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${city}&days=3`, {mode: "cors"})
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${city}&days=3`, {mode: "cors"})
         if(response.ok) {
             const data = await response.json();
             console.log(data);
