@@ -2,17 +2,30 @@
 
 #cardSlider {
     display: flex;
-    width: calc(99px * 10);
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    gap: 15px;
+    width: fit-content;
+    flex-direction: column;
 }
 
-
 .weatherCard {
+    display: grid;
+    grid-template-columns: 5ch 50px 20ch 7ch;
     background-color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 15px;
-    scroll-snap-align: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 30px;
+    column-gap: 15px;
+    padding: 5px;
+}
+
+.weatherCard:nth-child(even) {
+    background-color: #a2d2ff;
+}
+
+.text {
+    justify-self: left;
+    font-size: 14px;
+}
+
+.weatherCard img {
+    width: 30px;
 }

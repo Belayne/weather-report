@@ -6,21 +6,24 @@ function makeWeatherCard(data) {
 
     view.innerHTML = /*html*/ `
         <p class="hour">${data.hour}</p>
-        <img class="cardIcon" src="${data.icon}" alt = "${data.text}"/>
-        <p class="cardTemp">${data.temp}</p>
+        <img class="icon" src="${data.icon}" alt = "${data.text}"/>
+        <p class="text">${data.text}</p>
+        <p class="temp">${data.temp}</p>
     `
 
     return view;
 }
 
-export default function makeHourlyForecast(hourlyData, american) {
+export default function makeHourlyForecast(weather, american) {
     const view = document.createElement("div");
     view.id = "hourlyForecastDiv";
     const cardSlider = document.createElement("div");
     cardSlider.id = "cardSlider";
+    const todayLink = document.createElement("a");
 
-    function init(hourlyData, american) {
+    function init(weather, american) {
         cardSlider.innerHTML = "";
+        const hourlyData = weather.today.hour.filter(hour => hour.time_epoch >= weather.now.last_updated_epoch - 3600);  //From current hour till 23:00
 
         hourlyData.forEach(hourData => {
             const formattedData = {
@@ -36,7 +39,7 @@ export default function makeHourlyForecast(hourlyData, american) {
         view.append(cardSlider);
     }
 
-    init(hourlyData, american);
+    init(weather, american);
 
     return {
         view,

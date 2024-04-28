@@ -13,11 +13,11 @@ async function Controller() {
     let american = false;
     const sidebar = makeSidebar(weather, american);
     const searchbar = makeSearchbarView();
-    const hourlyForecast = makeHourlyForecast(weather.today.hour, american);
+    const hourlyForecast = makeHourlyForecast(weather, american);
 
     function updateView() {
         sidebar.update(weather);
-        hourlyForecast.init(weather.today.hour, american);
+        hourlyForecast.init(weather, american);
     }
 
     async function search(e) {
