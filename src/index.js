@@ -18,7 +18,7 @@ async function Controller() {
 
     function updateView() {
         sidebar.update(weather);
-        hourlyForecast.init(weather, american);
+        hourlyForecast.setViewData(weather, american);
     }
 
     async function search(e) {

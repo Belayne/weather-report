@@ -1,5 +1,6 @@
 import "./sidebar.css";
 import {format} from "date-fns";
+import { createElement } from "../../util";
 
 function getTime(date) {
     return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
@@ -7,19 +8,31 @@ function getTime(date) {
 
 function createDateLocationView(location, lastUpdate) {
     const formattedData = {};
-    const view = document.createElement('div');
-    view.classList.add('dateLocationDiv')
+    const view = createElement('div', {class: "dateLocationDiv"});
+    const sidebarLocation = createElement('h1', {class: "sidebarLocation"});
+    const sidebarTime = createElement('p', {class: "sidebarTime"});
+    const sidebarDate = createElement('p', {class: "sidebarDate"});
+    const sidebarCountry = createElement('span');
+    const sidebarUpdate = createElement('span');
+
+    sidebarUpdate.textContent = "Last updated";
+
+    view.append(sidebarLocation, sidebarTime, sidebarDate);
 
     function init(location, lastUpdate) {
         formattedData.location = location;
         formattedData.date = format(new Date, 'eeee d MMMM');
         formattedData.time = getTime(lastUpdate);
 
-        view.innerHTML = /*html*/ `
-        <h1 class="sidebarLocation">${formattedData.location.city}<span> ${formattedData.location.country}</span></h1>
-        <p class="sidebarTime">${formattedData.time}<span>Last update</span></p>
-        <p class="sidebarDate">${formattedData.date}</p>
-    `
+        sidebarLocation.textContent = formattedData.location.city;
+        sidebarCountry.textContent = formattedData.location.country;
+        sidebarLocation.appendChild(sidebarCountry);
+
+        sidebarTime.textContent = formattedData.time;
+        sidebarTime.appendChild(sidebarUpdate);
+
+        sidebarDate.textContent = formattedData.date;
+
     }
 
     init(location, lastUpdate);
@@ -31,9 +44,17 @@ function createDateLocationView(location, lastUpdate) {
 }
 
 function createWeatherView(weatherData, american) {
-    const view = document.createElement('div');
-    view.classList.add('sidebarWeather');
+    const view = createElement('div', {class: "sidebarWeather"});
+    const weatherFigure = createElement('figure', {class: "sidebarWeatherFig"});
+    const weatherImg = createElement('img');
+    const weatherCaption = createElement('figcaption');
+    const tempText = createElement('p', {class: "sidebarTemp"});
+    const perceivedText = createElement('p', {class: "sidebarPerceived"});
     const formattedData = {};
+
+    weatherFigure.append(weatherImg, weatherCaption);
+
+    view.append(weatherFigure, tempText, perceivedText);
 
     function init(weatherData) {
         formattedData.weatherText = weatherData.condition.text;
@@ -41,14 +62,10 @@ function createWeatherView(weatherData, american) {
         formattedData.temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
         formattedData.feelTemp = (american)? "Perceived " + weatherData.feelslike_f + "°F": "Perceived " + weatherData.feelslike_c + "°C";
 
-        view.innerHTML = /*html*/ `
-        <figure class="sidebarWeatherFig">
-            <img src="${formattedData.weatherIcon}"/>
-            <figcaption>${formattedData.weatherText}</figcaption>
-        </figure>
-        <p class="sidebarTemp">${formattedData.temp}</p>
-        <p class="sidebarPerceived">${formattedData.feelTemp}</p>
-    `
+        weatherImg.setAttribute("src", formattedData.weatherIcon);
+        weatherCaption.textContent = formattedData.weatherText;
+        tempText.textContent = formattedData.temp;
+        perceivedText.textContent = formattedData.perceivedText;
     }
 
     init(weatherData);

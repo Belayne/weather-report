@@ -1,4 +1,8 @@
-
+#hourlyForecastDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 #cardSlider {
     display: flex;
@@ -8,7 +12,7 @@
 
 .weatherCard {
     display: grid;
-    grid-template-columns: 5ch 50px 20ch 7ch;
+    grid-template-columns: 5ch 50px 15ch 7ch;
     background-color: white;
     justify-items: center;
     align-items: center;
@@ -28,4 +32,18 @@
 
 .weatherCard img {
     width: 30px;
+}
+
+div a {
+    color: gray;
+    padding: 5px;
+}
+
+div a:hover {
+    cursor: pointer;
+}
+
+.active {
+    color: black;
+    border-bottom: 1px solid black;
 }
