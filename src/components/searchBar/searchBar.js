@@ -10,7 +10,6 @@ export default function makeSearchbarView() {
 
     searchLabel.append(searchImg);
     view.append(searchLabel, searchInput);
-
-
+    
     return view;
 }

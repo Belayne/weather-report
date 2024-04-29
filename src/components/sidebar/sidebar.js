@@ -6,7 +6,7 @@ function getTime(date) {
     return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
 }
 
-function createDateLocationView(location, lastUpdate) {
+function createDateLocationView() {
     const formattedData = {};
     const view = createElement('div', {class: "dateLocationDiv"});
     const sidebarLocation = createElement('h1', {class: "sidebarLocation"});
@@ -35,15 +35,13 @@ function createDateLocationView(location, lastUpdate) {
 
     }
 
-    setViewData(location, lastUpdate);
-
     return {
         view,
         setViewData
     }
 }
 
-function createWeatherView(weatherData, american) {
+function createWeatherView() {
     const view = createElement('div', {class: "sidebarWeather"});
     const weatherFigure = createElement('figure', {class: "sidebarWeatherFig"});
     const weatherImg = createElement('img');
@@ -56,7 +54,7 @@ function createWeatherView(weatherData, american) {
 
     view.append(weatherFigure, tempText, perceivedText);
 
-    function setViewData(weatherData) {
+    function setViewData(weatherData, american = "false") {
         formattedData.weatherText = weatherData.condition.text;
         formattedData.weatherIcon = `${weatherData.condition.icon}`;
         formattedData.temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
@@ -68,8 +66,6 @@ function createWeatherView(weatherData, american) {
         perceivedText.textContent = formattedData.feelTemp;
     }
 
-    setViewData(weatherData);
-
     return {
         view,
         setViewData
@@ -77,24 +73,24 @@ function createWeatherView(weatherData, american) {
 }
 
 
-export default function makeSidebar(weatherData, american) {
+export default function makeSidebar() {
     const view = document.createElement('div');
     view.id = "sidebarContainer";
 
-    const sidebarDateLocation = createDateLocationView(weatherData.location, weatherData.now.last_updated);
-    const sidebarWeather = createWeatherView(weatherData.now, american);
+    const sidebarDateLocation = createDateLocationView();
+    const sidebarWeather = createWeatherView();
 
     view.append(sidebarDateLocation.view);
     view.append(sidebarWeather.view);
 
-    function update(newData) {
-        sidebarWeather.setViewData(newData.now);
+    function setViewData(newData, american) {
+        sidebarWeather.setViewData(newData.now, american);
         sidebarDateLocation.setViewData(newData.location, newData.now.last_updated)
     }
 
     return {
         view,
-        update
+        setViewData
     }
 }
 

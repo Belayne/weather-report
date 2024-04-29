@@ -12,14 +12,22 @@ async function log() {
 async function Controller() {
     let weather = await getWeather("Rome");
     let american = false;
-    const sidebar = makeSidebar(weather, american);
+    const sidebar = makeSidebar();
     const searchbar = makeSearchbarView();
     const hourlyForecast = makeHourlyForecast();
+    sidebar.setViewData(weather, american);
     hourlyForecast.setViewData(weather, american);
 
     function updateView() {
-        sidebar.update(weather);
+        sidebar.setViewData(weather, american);
         hourlyForecast.setViewData(weather, american);
+    }
+
+    function switchTemp(e) {
+        american = !american;
+        sidebar.setViewData(weather, american);
+        hourlyForecast.setViewData(weather, american);
+        e.target.textContent = (american)? "°F": "°C";
     }
 
     async function search(e) {
@@ -38,11 +46,12 @@ async function Controller() {
     }
 
     searchbar.addEventListener('submit', e => search(e))
+    hourlyForecast.view.querySelector("#switchTempBtn").addEventListener("click", e => switchTemp(e));
 
     //Resets input validity on new search
     searchbar.querySelector("input").addEventListener("change",e => {
         e.target.setCustomValidity("");
-    } )
+    })
 
     function render() {
         document.querySelector("#sidebar").append(sidebar.view)

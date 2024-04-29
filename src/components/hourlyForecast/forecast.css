@@ -50,3 +50,12 @@ div a:hover {
     border-bottom: 1px solid black;
 }
 
+#dayLinks {
+    display: flex;
+    gap: 10px;
+}
+
+#switchTempBtn {
+    font-weight: bold;
+}
+

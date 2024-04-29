@@ -24,17 +24,20 @@ export default function makeHourlyForecast() {
     const todayLink = createElement("a", {id: "todayLink", class: "active today"});
     const tomorrowLink = createElement("a", {id: "tomorrowLink"});
     const dayLinks = createElement("div", {id: "dayLinks"});
+    const switchTempButton = createElement("button", {id: "switchTempBtn"});
+    switchTempButton.textContent = "C°";
+
     let currentData;
     let isAmerican;
 
     todayLink.textContent = "Today";
     tomorrowLink.textContent = "Tomorrow";
 
-    dayLinks.append(todayLink, tomorrowLink);
+    dayLinks.append(todayLink, tomorrowLink, switchTempButton);
 
     view.append(dayLinks);
 
-    function setViewData(weatherData, american, tomorrow = false) {
+    function setViewData(weatherData, american = true, tomorrow = false) {
         isAmerican = american;
         currentData = weatherData;
 
