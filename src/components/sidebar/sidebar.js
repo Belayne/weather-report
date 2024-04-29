@@ -19,7 +19,7 @@ function createDateLocationView(location, lastUpdate) {
 
     view.append(sidebarLocation, sidebarTime, sidebarDate);
 
-    function init(location, lastUpdate) {
+    function setViewData(location, lastUpdate) {
         formattedData.location = location;
         formattedData.date = format(new Date, 'eeee d MMMM');
         formattedData.time = getTime(lastUpdate);
@@ -35,11 +35,11 @@ function createDateLocationView(location, lastUpdate) {
 
     }
 
-    init(location, lastUpdate);
+    setViewData(location, lastUpdate);
 
     return {
         view,
-        init
+        setViewData
     }
 }
 
@@ -56,7 +56,7 @@ function createWeatherView(weatherData, american) {
 
     view.append(weatherFigure, tempText, perceivedText);
 
-    function init(weatherData) {
+    function setViewData(weatherData) {
         formattedData.weatherText = weatherData.condition.text;
         formattedData.weatherIcon = `${weatherData.condition.icon}`;
         formattedData.temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
@@ -65,14 +65,14 @@ function createWeatherView(weatherData, american) {
         weatherImg.setAttribute("src", formattedData.weatherIcon);
         weatherCaption.textContent = formattedData.weatherText;
         tempText.textContent = formattedData.temp;
-        perceivedText.textContent = formattedData.perceivedText;
+        perceivedText.textContent = formattedData.feelTemp;
     }
 
-    init(weatherData);
+    setViewData(weatherData);
 
     return {
         view,
-        init
+        setViewData
     }
 }
 
@@ -88,8 +88,8 @@ export default function makeSidebar(weatherData, american) {
     view.append(sidebarWeather.view);
 
     function update(newData) {
-        sidebarWeather.init(newData.now);
-        sidebarDateLocation.init(newData.location, newData.now.last_updated)
+        sidebarWeather.setViewData(newData.now);
+        sidebarDateLocation.setViewData(newData.location, newData.now.last_updated)
     }
 
     return {

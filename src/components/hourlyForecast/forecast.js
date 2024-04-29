@@ -18,12 +18,14 @@ function makeWeatherCard(data) {
     return view;
 }
 
-export default function makeHourlyForecast(weather, american) {
+export default function makeHourlyForecast() {
     const view = createElement("div", {id: "hourlyForecastDiv"});
     const cardSlider = createElement("div", {id: "cardSlider"});
     const todayLink = createElement("a", {id: "todayLink", class: "active today"});
     const tomorrowLink = createElement("a", {id: "tomorrowLink"});
     const dayLinks = createElement("div", {id: "dayLinks"});
+    let currentData;
+    let isAmerican;
 
     todayLink.textContent = "Today";
     tomorrowLink.textContent = "Tomorrow";
@@ -32,10 +34,23 @@ export default function makeHourlyForecast(weather, american) {
 
     view.append(dayLinks);
 
-    function setViewData(weather, american) {
-        cardSlider.innerHTML = "";
+    function setViewData(weatherData, american, tomorrow = false) {
+        isAmerican = american;
+        currentData = weatherData;
 
-        const hourlyData = weather.today.hour.filter(hour => hour.time_epoch >= weather.now.last_updated_epoch - 3600);  //From current hour till 23:00
+        cardSlider.innerHTML = "";
+        let hourlyData;
+
+        if(tomorrow) {
+            hourlyData = currentData.tomorrow.hour;
+            todayLink.classList.remove("active");
+            tomorrowLink.classList.add("active");
+        }
+        else {
+            hourlyData = currentData.today.hour.filter(hour => hour.time_epoch >= currentData.now.last_updated_epoch - 3600);
+            todayLink.classList.add("active");
+            tomorrowLink.classList.remove("active");
+        }
 
         hourlyData.forEach(hourData => {
             const formattedData = {
@@ -43,7 +58,7 @@ export default function makeHourlyForecast(weather, american) {
                 icon: hourData.condition.icon,
                 text: hourData.condition.text
             }
-            formattedData.temp = (american) ? hourData.temp_f + "°F": hourData.temp_c + "°C";
+            formattedData.temp = (isAmerican) ? hourData.temp_f + "°F": hourData.temp_c + "°C";
             const card = makeWeatherCard(formattedData);
             card.setAttribute("data-hour", formattedData.hour);
             cardSlider.append(card);
@@ -51,7 +66,9 @@ export default function makeHourlyForecast(weather, american) {
         view.append(cardSlider);
     }
 
-    setViewData(weather, american);
+    tomorrowLink.addEventListener("click", () => setViewData(currentData, isAmerican, true));
+
+    todayLink.addEventListener("click", () => setViewData(currentData, isAmerican));
 
     return {
         view,
