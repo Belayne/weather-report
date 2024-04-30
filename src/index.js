@@ -15,6 +15,7 @@ async function Controller() {
     const sidebar = makeSidebar();
     const searchbar = makeSearchbarView();
     const hourlyForecast = makeHourlyForecast();
+    
     sidebar.setViewData(weather, american);
     hourlyForecast.setViewData(weather, american);
 

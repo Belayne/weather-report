@@ -17,14 +17,14 @@ function createDateLocationView() {
 
     sidebarUpdate.textContent = "Last updated";
 
-    view.append(sidebarLocation, sidebarTime, sidebarDate);
+    view.append(sidebarDate, sidebarLocation, sidebarTime);
 
     function setViewData(location, lastUpdate) {
         formattedData.location = location;
         formattedData.date = format(new Date, 'eeee d MMMM');
         formattedData.time = getTime(lastUpdate);
 
-        sidebarLocation.textContent = formattedData.location.city;
+        sidebarLocation.textContent = formattedData.location.city + ", " + formattedData.location.region;
         sidebarCountry.textContent = formattedData.location.country;
         sidebarLocation.appendChild(sidebarCountry);
 
@@ -56,7 +56,7 @@ function createWeatherView() {
 
     function setViewData(weatherData, american = "false") {
         formattedData.weatherText = weatherData.condition.text;
-        formattedData.weatherIcon = `${weatherData.condition.icon}`;
+        formattedData.weatherIcon = weatherData.condition.icon;
         formattedData.temp = (american)? weatherData.temp_f + "°F": weatherData.temp_c + "°C";
         formattedData.feelTemp = (american)? "Perceived " + weatherData.feelslike_f + "°F": "Perceived " + weatherData.feelslike_c + "°C";
 

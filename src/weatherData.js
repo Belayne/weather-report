@@ -5,6 +5,7 @@ class Weather {
     constructor(data) {
         this.location = {
             city: data.location.name,
+            region: data.location.region,
             country: data.location.country
         }
         this.now = data.current;
