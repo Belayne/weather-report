@@ -1,7 +1,5 @@
 import { getWeather } from "./weatherData"
-import makeSidebar from "./components/sidebar/sidebar";
-import makeSearchbarView from "./components/searchBar/searchBar";
-import makeHourlyForecast from "./components/hourlyForecast/forecast";
+import setCurrentWeatherCardData from "./currentWeather";
 import "./style.css"
 
 async function log() {
@@ -12,24 +10,10 @@ async function log() {
 async function Controller() {
     let weather = await getWeather("Rome");
     let american = false;
-    const sidebar = makeSidebar();
-    const searchbar = makeSearchbarView();
-    const hourlyForecast = makeHourlyForecast();
-    
-    sidebar.setViewData(weather, american);
-    hourlyForecast.setViewData(weather, american);
+    const searchbar = document.querySelector("#searchbar");
+    const currentWeatherCard = document.querySelector("#currentWeatherCard");
 
-    function updateView() {
-        sidebar.setViewData(weather, american);
-        hourlyForecast.setViewData(weather, american);
-    }
-
-    function switchTemp(e) {
-        american = !american;
-        sidebar.setViewData(weather, american);
-        hourlyForecast.setViewData(weather, american);
-        e.target.textContent = (american)? "°F": "°C";
-    }
+    setCurrentWeatherCardData(weather, currentWeatherCard);
 
     async function search(e) {
         e.preventDefault();
@@ -37,30 +21,24 @@ async function Controller() {
         try {
             const searchedLocation = new FormData(form).get("search")
             weather = await getWeather(searchedLocation);
-            updateView();
+            setCurrentWeatherCardData(weather, currentWeatherCard);
+            if(!weather) {
+                throw new Error("Invalid Search")
+            }
         }
         catch {
             //e.target.querySelector("input").value = "Inavlid Search";
             form.querySelector("input").setCustomValidity("Location not found")
             form.querySelector("input").reportValidity();
+
+            setTimeout(() => {
+                form.querySelector("input").setCustomValidity("")
+                form.querySelector("input").reportValidity();
+            }, 2000)
         }
     }
 
     searchbar.addEventListener('submit', e => search(e))
-    hourlyForecast.view.querySelector("#switchTempBtn").addEventListener("click", e => switchTemp(e));
-
-    //Resets input validity on new search
-    searchbar.querySelector("input").addEventListener("change",e => {
-        e.target.setCustomValidity("");
-    })
-
-    function render() {
-        document.querySelector("#sidebar").append(sidebar.view)
-        document.querySelector("#mainContent").append(searchbar)
-        document.querySelector("#mainContent").append(hourlyForecast.view)
-    }
-
-    render();
 }
 
 log();

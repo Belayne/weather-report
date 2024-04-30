@@ -1,14 +1,12 @@
-function createElement(name, attr = {}) {
-    const element = document.createElement(name);
-    if(attr) {
-        for(const [key, value] of Object.entries(attr)) {
-            element.setAttribute(key, value);
-        }
-    }
+function getTime(date) {
+    return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
+}
 
-    return element;
+function getDate(date) {
+    return new Date(date).toLocaleDateString([], {weekday:"long" ,day: "numeric", month: "long"})
 }
 
 export {
-    createElement
+    getTime,
+    getDate
 }

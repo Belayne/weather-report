@@ -10,7 +10,6 @@ class Weather {
         }
         this.now = data.current;
         [this.today, this.tomorrow, this.afterTomorrow] = data.forecast.forecastday;
-        this.date = new Date();
     }
 }
 
