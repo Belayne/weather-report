@@ -6,11 +6,16 @@
     <title>Weather report</title>
 </head>
 <body>
-    <header>
+    <header id="pageHeader">
         <form id = "searchbar" action="">
             <input type="search" name="search" id="locationInput" placeholder="Search location here">
         </form>
+        <div id="switchTempContainer">
+            <button id="celsBtn" class="active">°C</button>
+            <button id="fahrBtn" >°F</button>
+        </div>
     </header>
+
     <main id="container">
         <article class="card" id="currentWeatherCard">
             <header>
@@ -56,6 +61,69 @@
                 </div>
             </section>
         </article>
+
+        <article class="card" id="hourlyForecastCard">
+            <header>
+                <h2 class="cardTitle">Hourly Forecast</h2>
+            </header>
+            <section id="forecastHead">
+                <h3 data-id="hourlyDate">18 April 2024</h3>
+                <div>
+                    <h4>Temp</h4>
+                    <p class="tempUnit">C°</p>
+                </div>
+                <div>
+                    <h4>Prec</h4>
+                    <p>mm</p>
+                </div>
+                <div>
+                    <h4>Wind</h4>
+                    <p>km/h</p>
+                </div>
+                <div>
+                    <h4>Humidity</h4>
+                    <p>Relative</p>
+                </div>
+                <div>
+                    <h4>Feel</h4>
+                    <p class="tempUnit">C°</p>
+                </div>
+            </section>
+            <section id="forecastValues">
+                <div>
+                    <p data-id="hour">09:00</p>
+                    <img data-id="weatherIcon" src="" alt="">
+                    <p data-id="weatherText">Pioggia debole</p>
+                    <p data-id="temp">19.6°</p>
+                    <p data-id="prec">10</p>
+                    <p data-id="wind">10 WSW</p>
+                    <p data-id="humidity">75 %</p>
+                    <p data-id="feelTemp">69°</p>
+                </div>
+                <div>
+                    <p data-id="hour">09:00</p>
+                    <img data-id="weatherIcon" src="" alt="">
+                    <p data-id="weatherText">Pioggia debole</p>
+                    <p data-id="temp">19.6°</p>
+                    <p data-id="prec">10</p>
+                    <p data-id="wind">10 WSW</p>
+                    <p data-id="humidity">75</p>
+                    <p data-id="feelTemp">69°</p>
+                </div>
+            </section>
+        </article>
+
+        <article class="card">
+            <header>
+                <h2 class="cardTitle">3 day forecast</h2>
+            </header>
+        </article>
     </main>
+    <footer>
+        <figure>
+            <figcaption>POWERED BY</figcaption>
+            <a target="_blank" href="https://www.weatherapi.com/" title="Free Weather API"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
+        </figure>
+    </footer>
 </body>
 </html>
