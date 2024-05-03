@@ -1,7 +1,9 @@
 import { getWeather } from "./weatherData"
 import setCurrentWeatherCardData from "./currentWeather";
+import { startThrobber, endThrobber } from "./util";
 import setHourlyForecastData from "./hourlyForecast";
 import "./style.css"
+
 
 async function log() {
     const weather = await getWeather("Rome");
@@ -26,25 +28,29 @@ async function Controller() {
         e.preventDefault();
         const form = e.target;
         try {
+            startThrobber(currentWeatherCard, hourlyForecastCard)
             const searchedLocation = new FormData(form).get("search")
             const newWeather = await getWeather(searchedLocation);
-            updateViewData();
             if(!newWeather) {
                 throw new Error("Invalid Search")
             }
             else {
                 weather = newWeather;
+                updateViewData();
             }
         }
         catch {
             //e.target.querySelector("input").value = "Inavlid Search";
-            form.querySelector("input").setCustomValidity("Invalid")
+            form.querySelector("input").setCustomValidity("Location not found")
             form.querySelector("input").reportValidity();
 
             setTimeout(() => {
                 form.querySelector("input").setCustomValidity("")
                 form.querySelector("input").reportValidity();
             }, 2000)
+        }
+        finally {
+            endThrobber(currentWeatherCard, hourlyForecastCard);
         }
     }
 
