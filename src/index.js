@@ -1,5 +1,6 @@
 import { getWeather } from "./weatherData"
 import setCurrentWeatherCardData from "./currentWeather";
+import setThreeDayCardData from "./threeDay";
 import { startThrobber, endThrobber } from "./util";
 import setHourlyForecastData from "./hourlyForecast";
 import "./style.css"
@@ -11,24 +12,26 @@ async function log() {
 }
 
 async function Controller() {
-    let weather = await getWeather("Rome");
+    let weather;
     let fahr = false;
     const searchbar = document.querySelector("#searchbar");
     const currentWeatherCard = document.querySelector("#currentWeatherCard");
     const hourlyForecastCard = document.querySelector("#hourlyForecastCard");
+    const threeDayCard = document.querySelector("#threeDayCard");
     const fahrBtn = document.querySelector("#fahrBtn");
     const celsBtn = document.querySelector("#celsBtn");
 
     function updateViewData() {
         setCurrentWeatherCardData(weather, currentWeatherCard, fahr);
         setHourlyForecastData(weather, hourlyForecastCard, fahr);
+        setThreeDayCardData(weather, threeDayCard, fahr);
     }
 
     async function search(e) {
         e.preventDefault();
         const form = e.target;
         try {
-            startThrobber(currentWeatherCard, hourlyForecastCard)
+            startThrobber(currentWeatherCard, hourlyForecastCard,threeDayCard)
             const searchedLocation = new FormData(form).get("search")
             const newWeather = await getWeather(searchedLocation);
             if(!newWeather) {
@@ -50,7 +53,7 @@ async function Controller() {
             }, 2000)
         }
         finally {
-            endThrobber(currentWeatherCard, hourlyForecastCard);
+            endThrobber(currentWeatherCard, hourlyForecastCard, threeDayCard);
         }
     }
 
@@ -69,10 +72,13 @@ async function Controller() {
         updateViewData();
     }
 
+    startThrobber(currentWeatherCard, hourlyForecastCard, threeDayCard);
+    weather = await getWeather("Rome")    
     searchbar.addEventListener('submit', e => search(e))
     fahrBtn.addEventListener("click", e => switchTemp(e));
     celsBtn.addEventListener("click", e => switchTemp(e));
     updateViewData();
+    endThrobber(currentWeatherCard, hourlyForecastCard, threeDayCard);
 }
 
 log();
