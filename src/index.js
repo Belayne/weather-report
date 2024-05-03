@@ -2,14 +2,15 @@ import { getWeather } from "./weatherData"
 import setCurrentWeatherCardData from "./currentWeather";
 import setThreeDayCardData from "./threeDay";
 import { startThrobber, endThrobber } from "./util";
+import getIp from "./geoLocation";
 import setHourlyForecastData from "./hourlyForecast";
-import "./style.css"
+import "./style.css";
 
 
-async function log() {
+/*async function log() {
     const weather = await getWeather("Rome");
     console.log(weather)
-}
+}*/
 
 async function Controller() {
     let weather;
@@ -20,6 +21,7 @@ async function Controller() {
     const threeDayCard = document.querySelector("#threeDayCard");
     const fahrBtn = document.querySelector("#fahrBtn");
     const celsBtn = document.querySelector("#celsBtn");
+    let clientIP;
 
     function updateViewData() {
         setCurrentWeatherCardData(weather, currentWeatherCard, fahr);
@@ -73,7 +75,8 @@ async function Controller() {
     }
 
     startThrobber(currentWeatherCard, hourlyForecastCard, threeDayCard);
-    weather = await getWeather("Rome")    
+    clientIP = await getIp();
+    weather = await getWeather(clientIP);    
     searchbar.addEventListener('submit', e => search(e))
     fahrBtn.addEventListener("click", e => switchTemp(e));
     celsBtn.addEventListener("click", e => switchTemp(e));
@@ -81,6 +84,6 @@ async function Controller() {
     endThrobber(currentWeatherCard, hourlyForecastCard, threeDayCard);
 }
 
-log();
+//log();
 
 Controller();

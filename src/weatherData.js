@@ -18,7 +18,7 @@ async function getWeather(city = "Rome") {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${KEY}&q=${city}&days=3`, {mode: "cors"})
         if(response.ok) {
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             const weather = new Weather(data);
             return weather;
         }
