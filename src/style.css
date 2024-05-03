@@ -100,23 +100,19 @@ input {
     align-items: center;
     text-align: center;
     flex-wrap: wrap;
+}
 
-    figure {
-        display: flex;
-        align-items: center;
+#currentWeather figure {
+    display: flex;
+    align-items: center;
+}
 
-        img {
-            width: 70px;
-        }
-    }
+#currentWeather img {
+    width: 70px;
 }
 
 #temp {
     font-size: 48px;
-
-    span {
-        font-size: 16px;
-    }
 }
 
 #currentDetails {
@@ -149,16 +145,11 @@ button {
 
 button:hover {
     cursor: pointer;
-    transform: scale(1.2, 1.2);
-}
-
-button:active {
-    transform: scale(1.1, 1.1);
 }
 
 .active {
-    transform: scale(1.2, 1.2);
     color: white;
+    transform: scale(1.1, 1.1);
     background-color: #696969;
 }
 
@@ -168,28 +159,28 @@ button:active {
     align-items: center;
     text-align: center;
     grid-template-columns: 4fr 1fr 1fr 1fr 1fr 1fr;
+}
 
-    h4, h3 {
-        font-weight: 500;
-        text-transform: uppercase;
-    }
+#forecastHead h4, #forecastHead h3 {
+    font-weight: 500;
+    text-transform: uppercase;
+}
 
-    h4 {
-        font-size: 14px;
-    }
+#forecastHead h3 {
+    align-self: center;
+    color: white;
+    width: 90%;
+    padding: 5px 0 5px 0; 
+    background-color: #696969;
+}
 
-    h3 {
-        align-self: center;
-        color: white;
-        width: 90%;
-        padding: 5px 0 5px 0; 
-        background-color: #696969;
-    }
+#forecastHead h4 {
+    font-size: 14px;
+}
 
-    p {
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.35);
-    }
+#forecastHead p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.35);
 }
 
 #forecastValues {
@@ -208,6 +199,7 @@ button:active {
 }
 
 #forecastValues div p:nth-of-type(2) {
+    text-align: left;
     justify-self: left;
     font-weight: 300;
 }
@@ -306,6 +298,16 @@ footer figure {
     }
     .card {
         box-shadow: unset;
+    }
+    .dayCard div {
+        flex-direction: column;
+        align-items: center;
+    }
+    .dayCard p{
+        font-size: 16px;
+    }
+    #threeDayCard h3 {
+        font-size: 16px;
     }
 }
 

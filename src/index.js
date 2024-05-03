@@ -60,7 +60,8 @@ async function Controller() {
     }
 
     function switchTemp(e) {
-        fahr = !fahr;
+        const clicked = e.target.id;
+        fahr = (clicked === "celsBtn")? false: true;
         if(fahr) {
             fahrBtn.classList.add("active");
             celsBtn.classList.remove("active");
